@@ -19,18 +19,24 @@
 
 CC = gcc
 #CC = x86_64-w64-mingw32-gcc-4.5.1
+
 #CFLAGS = -march=core2 -mtune=core2
-CFLAGS = -g
+#CFLAGS = -g
+CFLAGS = -g -march=native -mtune=native
+
 WARN_FLAGS = -Wall # -Wconversion
 OPT_FLAGS = -O3
 INC = -I. -Iinclude
 
 # modify these for your particular gmp/gmp-ecm installation
-INC += -I../gmp/include
-LIBS += -L../gmp/lib/linux/x86_64
+#INC += -I../gmp/include
+#LIBS += -L../gmp/lib/linux/x86_64
 
-INC += -I../gmp-ecm/include
-LIBS += -L../gmp-ecm/lib/linux/x86_64
+#INC += -I../gmp-ecm/include
+#LIBS += -L../gmp-ecm/lib/linux/x86_64
+
+INC += -I/usr/local/include
+LIBS += -L/usr/local/lib
 
 ifeq ($(STATIC),1)
 	CFLAGS += -static
@@ -63,8 +69,8 @@ endif
 ifeq ($(NFS),1)
 	CFLAGS += -DUSE_NFS
 #	modify the following line for your particular msieve installation
-	LIBS += -L../msieve/lib/linux/x86_64 
-	LIBS += -lmsieve -ldl
+#	LIBS += -L../msieve/lib/linux/x86_64 
+	LIBS += -lmsieve -ldl -lz
 endif
 
 # modify these for your particular cuda installation
@@ -117,6 +123,7 @@ YAFU_SRCS = \
 	factor/factor_common.c \
 	factor/rho.c \
 	factor/squfof.c \
+	factor/safe_system.c \
 	factor/trialdiv.c \
 	factor/tune.c \
 	factor/qs/filter.c \

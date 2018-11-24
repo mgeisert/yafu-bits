@@ -658,17 +658,19 @@ void *ecm_do_one_curve(void *ptr)
 
 		// build system command
 		//"echo \042 %s \042 | %s %u >> %s\n",
-		sprintf(cmd, "echo %s | %s -sigma %u %u > %s\n", 
+		sprintf(cmd, "echo %s | %s -sigma %u %u > %s", 
 			tmpstr, fobj->ecm_obj.ecm_path, thread_data->sigma, fobj->ecm_obj.B1, 
 			thread_data->tmp_output);
 
 		// run system command
-		retcode = system(cmd);
+		retcode = safe_system(cmd);	//XXX
 
 		free(tmpstr);
 		free(cmd);
 
 		// this is what I observed ecm returning on ctrl-c.  hopefully it is portable.
+		if (retcode != 0)		//XXX
+			ECM_ABORT = 1;		//XXX
 		if (retcode == 33280)
 			ECM_ABORT = 1;
 		

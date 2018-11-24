@@ -168,7 +168,7 @@ int test_sieve(fact_obj_t* fobj, void* args, int njobs, int are_files)
 		sprintf(syscmd, "%s -b %s -k -c 0 -F", jobs[i].sievername, filenames[i]);
 		if (VFLAG > 0) printf("\ntest: generating factor bases\n");
 		gettimeofday(&start, NULL);
-		system(syscmd);
+		safe_system(syscmd);
 		gettimeofday(&stop, NULL);
 		difference = my_difftime (&start, &stop);
 		t_time = ((double)difference->secs + (double)difference->usecs / 1000000);
@@ -189,7 +189,7 @@ int test_sieve(fact_obj_t* fobj, void* args, int njobs, int are_files)
 		fclose(flog);
 
 		gettimeofday(&start, NULL);
-		system(syscmd);
+		safe_system(syscmd);
 		gettimeofday(&stop, NULL);
 		difference = my_difftime (&start, &stop);
 		t_time = ((double)difference->secs + (double)difference->usecs / 1000000);
@@ -585,7 +585,7 @@ void *lasieve_launcher(void *ptr)
 	}
 	if (VFLAG > 1) printf("syscmd: %s\n", syscmd);
 	if (VFLAG > 1) fflush(stdout);
-	cmdret = system(syscmd);
+	cmdret = safe_system(syscmd);
 
 	// a ctrl-c abort signal is caught by the system command, and nfsexit never gets called.
 	// so check for abnormal exit from the system command.

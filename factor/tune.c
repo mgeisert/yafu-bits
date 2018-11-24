@@ -152,7 +152,7 @@ void factor_tune(fact_obj_t *inobj)
 
 		printf("nfs: commencing construction of afb\n");
 
-		system(syscmd);
+		safe_system(syscmd);
 		gettimeofday(&stop, NULL);
 		difference = my_difftime (&start, &stop);
 		t_time2 = ((double)difference->secs + (double)difference->usecs / 1000000);
@@ -169,7 +169,7 @@ void factor_tune(fact_obj_t *inobj)
 			sievername, startq, qrange);
 		printf("nfs: commencing lattice sieving over range: %u - %u\n",
 			startq, startq + qrange);
-		system(syscmd);
+		safe_system(syscmd);
 		gettimeofday(&stop, NULL);
 		difference = my_difftime (&start, &stop);
 		t_time = ((double)difference->secs + (double)difference->usecs / 1000000);

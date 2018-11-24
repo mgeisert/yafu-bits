@@ -475,7 +475,7 @@ void do_msieve_polyselect(fact_obj_t *fobj, msieve_obj *obj, nfs_job_t *job,
 
 					// test for cat
 					sprintf(syscmd,"cat %s.p >> %s 2> nul",t->polyfilename,master_polyfile);
-					a = system(syscmd);
+					a = safe_system(syscmd);
 	
 					if (a)		
 					{
@@ -487,7 +487,7 @@ void do_msieve_polyselect(fact_obj_t *fobj, msieve_obj *obj, nfs_job_t *job,
 
 #else
 				sprintf(syscmd,"cat %s.p >> %s",t->polyfilename,master_polyfile);
-				system(syscmd);
+				safe_system(syscmd);
 #endif
 				//then stick on the current total elasped time
 				//this is used to help restart jobs in the polyfind phase
